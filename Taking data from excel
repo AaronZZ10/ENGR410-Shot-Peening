@@ -1,0 +1,35 @@
+import pandas as pd
+
+
+############################## take real data ##################################"
+
+# Specify the path to the Excel file
+excel_file_path = r"C:\Users\diane\CodingProjects\tamu\Simulation-Grenaillage-RK2020_MD.xlsm"
+data_output = pd.read_excel(excel_file_path,sheet_name="Output",header=None, usecols="M:X").dropna(how="all")
+
+# Create a list to store the sub-DataFrames
+all_output = []
+
+# Number of rows in each sub-DataFrame
+chunk_size = 26
+
+# Split the DataFrame into sub-DataFrames of 26 rows each
+for i in range(0, len(data_output), chunk_size):
+    output = data_output.iloc[i:i + chunk_size]
+    all_output.append(output)
+
+############################## take real input ##################################"
+
+# Specify the path to the Excel file
+
+data_input = pd.read_excel(excel_file_path,sheet_name="Input", usecols="A:Z").dropna(how="all")
+
+# Create a list to store the sub-DataFrames
+all_input = []
+
+header=data_input['Unnamed: 0'].tolist()
+
+# Split the DataFrame in columns
+for i in range(1, 26):
+    inputs = data_input['test'+str(i)].tolist()
+    all_input.append(inputs)
